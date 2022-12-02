@@ -1,4 +1,4 @@
 - 👋 Hi, I’m @mcontreras
 - 👀 I’m interested in design and technology
-- 🌱 I’m currently learning frameworks and J
+- 🌱 I’m currently learning frameworks and JS
 - 📫 How to reach me: mcontreras@proton.me
