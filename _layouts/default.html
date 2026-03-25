@@ -21,28 +21,35 @@
 
   <script>
     // Theme
-    (function() {
-      var saved = localStorage.getItem('theme');
-      var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      var theme = saved || preferred;
+    function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
       var icon = theme === 'dark' ? '☽' : '☀';
       ['themetoggle','themetoggle-mobile'].forEach(function(id) {
         var el = document.getElementById(id);
         if (el) el.textContent = id === 'themetoggle-mobile' ? icon + '\u00a0 Cambiar tema' : icon;
       });
+    }
+
+    // Aplica el tema al cargar: prioridad → preferencia manual → preferencia del sistema
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      applyTheme(saved || preferred);
     })();
+
+    // Escucha cambios en el tema del sistema en tiempo real
+    // Solo aplica si el usuario no ha elegido manualmente un tema
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+      if (!localStorage.getItem('theme')) {
+        applyTheme(e.matches ? 'dark' : 'light');
+      }
+    });
 
     function toggleTheme() {
       var current = document.documentElement.getAttribute('data-theme');
       var next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
-      var icon = next === 'dark' ? '☽' : '☀';
-      ['themetoggle','themetoggle-mobile'].forEach(function(id) {
-        var el = document.getElementById(id);
-        if (el) el.textContent = id === 'themetoggle-mobile' ? icon + '\u00a0 Cambiar tema' : icon;
-      });
+      applyTheme(next);
     }
 
     // Mobile menu
