@@ -1,0 +1,48 @@
+---
+layout: default
+---
+<div class="post-page">
+  <div class="wrap">
+
+    <a href="{{ '/notas/' | relative_url }}" class="back-link">← Notas</a>
+
+    <div class="post-header">
+      <p class="post-kicker">
+        {% if page.categories.size > 0 %}{{ page.categories | first }} · {% endif %}
+        {{ page.date | date: "%-d de %B de %Y" }}
+      </p>
+      <h1 class="post-h1">{{ page.title }}</h1>
+      {% if page.description %}
+      <p class="post-deck">{{ page.description }}</p>
+      {% endif %}
+      <div class="post-byline">
+        <span class="post-byline-name">{{ site.author.name }}</span>
+        <span class="byline-sep">·</span>
+        <span>{{ content | number_of_words | divided_by: 200 | plus: 1 }} min de lectura</span>
+      </div>
+    </div>
+
+    <div class="post-content">
+      {{ content }}
+    </div>
+
+    <div class="post-nav-row">
+      {% if page.previous.url %}
+      <a href="{{ page.previous.url | relative_url }}" class="post-nav-prev">
+        <div class="pn-label">← Anterior</div>
+        <div class="pn-title">{{ page.previous.title }}</div>
+      </a>
+      {% else %}
+      <div></div>
+      {% endif %}
+
+      {% if page.next.url %}
+      <a href="{{ page.next.url | relative_url }}" class="post-nav-next">
+        <div class="pn-label">Siguiente →</div>
+        <div class="pn-title">{{ page.next.title }}</div>
+      </a>
+      {% endif %}
+    </div>
+
+  </div>
+</div>

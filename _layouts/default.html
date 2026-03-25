@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+  {% seo %}
+</head>
+<body>
+  {% include header.html %}
+  <main class="main">
+    {{ content }}
+  </main>
+  {% include footer.html %}
+
+  <script>
+    // Theme
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      var theme = saved || preferred;
+      document.documentElement.setAttribute('data-theme', theme);
+      var icon = theme === 'dark' ? '☽' : '☀';
+      ['themetoggle','themetoggle-mobile'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = id === 'themetoggle-mobile' ? icon + '\u00a0 Cambiar tema' : icon;
+      });
+    })();
+
+    function toggleTheme() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      var icon = next === 'dark' ? '☽' : '☀';
+      ['themetoggle','themetoggle-mobile'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = id === 'themetoggle-mobile' ? icon + '\u00a0 Cambiar tema' : icon;
+      });
+    }
+
+    // Mobile menu
+    function toggleMenu() {
+      var btn = document.getElementById('nav-hamburger');
+      var dd  = document.getElementById('nav-dropdown');
+      if (!btn || !dd) return;
+      var open = dd.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+    }
+
+    document.addEventListener('click', function(e) {
+      var nav = document.getElementById('nav');
+      if (nav && !nav.contains(e.target)) {
+        var dd  = document.getElementById('nav-dropdown');
+        var btn = document.getElementById('nav-hamburger');
+        if (dd)  dd.classList.remove('open');
+        if (btn) btn.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>

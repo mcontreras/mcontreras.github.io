@@ -1,0 +1,26 @@
+<div class="nav-outer" id="nav">
+  <nav class="nav-inner">
+    <a href="{{ '/' | relative_url }}" class="logo">{{ site.title }}</a>
+    <div class="nav-sep"></div>
+    <!-- Desktop links -->
+    <div class="nav-links">
+      <a href="{{ '/' | relative_url }}" class="nav-link{% if page.url == '/' %} active{% endif %}">Inicio</a>
+      <a href="{{ '/notas/' | relative_url }}" class="nav-link{% if page.url contains '/notas' %} active{% endif %}">Notas</a>
+      <a href="{{ '/sobre-mi/' | relative_url }}" class="nav-link{% if page.url contains '/sobre-mi' %} active{% endif %}">Sobre mí</a>
+    </div>
+    <div class="nav-sep"></div>
+    <button class="nav-btn" id="themetoggle" onclick="toggleTheme()" aria-label="Cambiar tema">☀</button>
+    <!-- Mobile hamburger -->
+    <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMenu()" aria-label="Menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <!-- Mobile dropdown -->
+  <div class="nav-dropdown" id="nav-dropdown">
+    <a href="{{ '/' | relative_url }}" class="nav-dropdown-link{% if page.url == '/' %} on{% endif %}">Inicio</a>
+    <a href="{{ '/notas/' | relative_url }}" class="nav-dropdown-link{% if page.url contains '/notas' %} on{% endif %}">Notas</a>
+    <a href="{{ '/sobre-mi/' | relative_url }}" class="nav-dropdown-link{% if page.url contains '/sobre-mi' %} on{% endif %}">Sobre mí</a>
+    <div class="nav-dropdown-sep"></div>
+    <button class="nav-dropdown-theme" id="themetoggle-mobile" onclick="toggleTheme()">☀ &nbsp;Cambiar tema</button>
+  </div>
+</div>

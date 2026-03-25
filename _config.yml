@@ -1,0 +1,48 @@
+title: Manu Contreras
+description: Veinte años escribiendo sobre tecnología, seguridad y medios.
+url: "https://manucontreras.com"
+baseurl: ""
+
+author:
+  name: Manu Contreras
+  email: manu@contreras.cc
+  location: Madrid, España
+  linkedin: https://www.linkedin.com/in/mcontreras
+  mastodon: https://mastodon.social/@mcontreras
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /notas/:year/:month/:day/:title/
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .bundle
+  - README.md
+  - _preview
+
+# Feed
+feed:
+  path: /feed.xml
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      comments: false
