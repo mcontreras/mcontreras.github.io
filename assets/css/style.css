@@ -427,6 +427,20 @@ strong { font-weight: 600; }
 }
 .about-content a { color: var(--accent); }
 
+/* About photo */
+.about-photo {
+  margin-bottom: 2.5rem;
+}
+.about-photo img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 50%;
+  display: block;
+  filter: grayscale(100%);
+}
+
 .contact-list { display: flex; flex-direction: column; }
 
 .contact-item {

@@ -5,6 +5,10 @@ permalink: /sobre-mi/
 description: Periodista tecnológico, director editorial y blogger desde 2004.
 ---
 
+<div class="about-photo">
+  <img src="/assets/images/manu.jpg" alt="Manu Contreras" />
+</div>
+
 Soy el autor de varios blogs desde principios de los años 2010, newsletters en la era pre-newsletters, blogger y periodista enfocado en tecnología y negocios.
 
 Soy periodista tecnológico por casualidad. Me metí muy de lleno en el mundo de los blogs en 2004 con un relativo éxito. De blogs personales pasaron a hablar sobre todo de tecnología, mi pasión, además de diseño, desarrollo web y compras de camisetas. Era la época del boom de las tiendas de camisetas con diseños llamativos.
