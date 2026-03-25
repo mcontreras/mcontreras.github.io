@@ -13,6 +13,8 @@ Soy el autor de varios blogs desde principios de los años 2010, newsletters en 
 
 Soy periodista tecnológico por casualidad. Me metí muy de lleno en el mundo de los blogs en 2004 con un relativo éxito. De blogs personales pasaron a hablar sobre todo de tecnología, mi pasión, además de diseño, desarrollo web y compras de camisetas. Era la época del boom de las tiendas de camisetas con diseños llamativos.
 
+<div style="clear:both"></div>
+
 Fundé un par de blogs sobre compras de elementos cool en internet (**Monkeyzen**) antes que el fenómeno explotase gracias a los afiliados.
 
 Mi afición por la tecnología me llevó a ser parte del equipo fundador de varios medios y blogs de tecnología hispanos de gran éxito, como **Genbeta** —por aquel entonces parte de la red de blogs Weblogs S.L.— y de **Gizmología**, parte de **Hipertextual**, empresa que ayudé a fundar y de la que soy socio.

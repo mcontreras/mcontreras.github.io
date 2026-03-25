@@ -429,16 +429,34 @@ strong { font-weight: 600; }
 
 /* About photo */
 .about-photo {
-  margin-bottom: 2.5rem;
+  float: right;
+  margin: 0.25rem 0 2rem 2.5rem;
+  shape-outside: border-box;
 }
 .about-photo img {
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
-  object-position: center top;
-  border-radius: 50%;
+  width: 340px;
+  height: auto;
   display: block;
+  border-radius: 4px;
+  border: 8px solid #fff;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+  transform: rotate(2deg);
   filter: grayscale(100%);
+}
+[data-theme="dark"] .about-photo img {
+  border-color: #1e1e1e;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+}
+@media (max-width: 640px) {
+  .about-photo {
+    float: none;
+    margin: 0 0 2rem 0;
+  }
+  .about-photo img {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
 }
 
 .contact-list { display: flex; flex-direction: column; }
