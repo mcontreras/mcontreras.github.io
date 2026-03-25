@@ -9,11 +9,13 @@ author:
   location: Madrid, España
   linkedin: https://www.linkedin.com/in/mcontreras
   mastodon: https://mastodon.social/@mcontreras
+  bluesky: https://bsky.app/profile/manucontreras.com
+  threads: https://www.threads.com/@mcontreras
 
 # Build settings
 markdown: kramdown
 highlighter: rouge
-permalink: /notas/:year/:month/:day/:title/
+permalink: /notas/:title
 
 kramdown:
   input: GFM
