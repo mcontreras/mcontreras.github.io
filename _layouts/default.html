@@ -19,6 +19,15 @@
   </main>
   {% include footer.html %}
 
+  <!-- Banner de cookies -->
+  <div id="cookie-banner" style="display:none" role="dialog" aria-label="Aviso de cookies">
+    <p>Uso Google Analytics para saber cuántas personas visitan el sitio. ¿Aceptas las cookies analíticas?</p>
+    <div class="cookie-actions">
+      <button onclick="setCookies('rejected')" class="cookie-btn cookie-btn--secondary">No, gracias</button>
+      <button onclick="setCookies('accepted')" class="cookie-btn cookie-btn--primary">Aceptar</button>
+    </div>
+  </div>
+
   <script>
     // Theme
     function applyTheme(theme) {
@@ -51,6 +60,37 @@
       localStorage.setItem('theme', next);
       applyTheme(next);
     }
+
+    // Google Analytics — solo carga si hay consentimiento
+    function loadGA() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-VP27VJ8NEE';
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-VP27VJ8NEE');
+    }
+
+    // Cookies: gestión de consentimiento
+    function setCookies(choice) {
+      localStorage.setItem('cookies', choice);
+      document.getElementById('cookie-banner').style.display = 'none';
+      if (choice === 'accepted') loadGA();
+    }
+
+    (function() {
+      var consent = localStorage.getItem('cookies');
+      if (consent === 'accepted') {
+        loadGA();
+      } else if (!consent) {
+        // Sin decisión previa → mostrar banner
+        document.getElementById('cookie-banner').style.display = 'flex';
+      }
+      // Si es 'rejected', no se muestra nada ni se carga GA
+    })();
 
     // Mobile menu
     function toggleMenu() {
