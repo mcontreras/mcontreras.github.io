@@ -1,25 +1,32 @@
 {% assign mode = include.mode | default: "full" %}
 
-{% if page.categories and page.categories.size > 0 %}
-<div class="post-taxonomy-row">
-  <span class="post-taxonomy-label">Categoría</span>
-  <div class="post-taxonomy-links">
-    {% for category in page.categories %}
-    {% assign category_slug = category | slugify %}
-    <a href="{{ '/categorias/' | relative_url }}#{{ category_slug }}" class="taxonomy-chip taxonomy-chip--category">{{ category }}</a>
-    {% endfor %}
-  </div>
-</div>
-{% endif %}
+{% assign has_categories = page.categories and page.categories.size > 0 %}
+{% assign has_tags = page.tags and page.tags.size > 0 %}
 
-{% if page.tags and page.tags.size > 0 %}
-<div class="post-taxonomy-row{% if mode == 'compact' %} post-taxonomy-row--compact{% endif %}">
-  <span class="post-taxonomy-label">Etiquetas</span>
-  <div class="post-taxonomy-links">
-    {% for tag in page.tags %}
-    {% assign tag_slug = tag | slugify %}
-    <a href="{{ '/etiquetas/' | relative_url }}#{{ tag_slug }}" class="taxonomy-chip">#{{ tag }}</a>
-    {% endfor %}
+{% if has_categories or has_tags %}
+<div class="post-taxonomy">
+  {% if has_categories %}
+  <div class="post-taxonomy-row">
+    <span class="post-taxonomy-label">Categoría</span>
+    <div class="post-taxonomy-links">
+      {% for category in page.categories %}
+      {% assign category_slug = category | slugify %}
+      <a href="{{ '/categorias/' | relative_url }}#{{ category_slug }}" class="taxonomy-chip taxonomy-chip--category">{{ category }}</a>
+      {% endfor %}
+    </div>
   </div>
+  {% endif %}
+
+  {% if has_tags %}
+  <div class="post-taxonomy-row{% if mode == 'compact' %} post-taxonomy-row--compact{% endif %}">
+    <span class="post-taxonomy-label">Etiquetas</span>
+    <div class="post-taxonomy-links">
+      {% for tag in page.tags %}
+      {% assign tag_slug = tag | slugify %}
+      <a href="{{ '/etiquetas/' | relative_url }}#{{ tag_slug }}" class="taxonomy-chip taxonomy-chip--tag">#{{ tag }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
 </div>
 {% endif %}
