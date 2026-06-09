@@ -22,12 +22,13 @@ layout: default
         <span class="byline-sep">·</span>
         <span>{{ content | number_of_words | divided_by: 200 | plus: 1 }} min de lectura</span>
       </div>
-      {% include post_taxonomy.html %}
     </div>
 
     <div class="post-content">
       {{ content }}
     </div>
+
+    {% include post_taxonomy.html %}
 
     {% assign has_category_related = false %}
     {% if primary_category %}
