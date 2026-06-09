@@ -29,41 +29,69 @@ layout: default
       {{ content }}
     </div>
 
-    {% assign category_related = site.posts | where_exp: "post", "post.url != page.url and post.categories contains primary_category" %}
-    {% assign tag_related = site.posts | where_exp: "post", "post.url != page.url and post.tags contains primary_tag" %}
-    {% assign related_posts = category_related %}
-    {% assign related_context = primary_category %}
-    {% assign related_context_type = "category" %}
-    {% if related_posts == empty %}
-      {% assign related_posts = tag_related %}
-      {% assign related_context = primary_tag %}
-      {% assign related_context_type = "tag" %}
+    {% assign has_category_related = false %}
+    {% if primary_category %}
+      {% for post in site.posts %}
+        {% if post.url != page.url and post.categories contains primary_category %}
+          {% assign has_category_related = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
     {% endif %}
 
-    {% if related_posts != empty %}
+    {% assign has_tag_related = false %}
+    {% if primary_tag %}
+      {% for post in site.posts %}
+        {% if post.url != page.url and post.tags contains primary_tag %}
+          {% assign has_tag_related = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if has_category_related or has_tag_related %}
     <section class="related-posts">
       <div class="related-posts-head">
         <p class="sh">Seguir leyendo</p>
         <h2 class="related-posts-title">
-          {% if related_context_type == "category" %}
-          Más notas sobre {{ related_context }}
-          {% elsif related_context_type == "tag" %}
-          Más notas etiquetadas con {{ related_context }}
+          {% if has_category_related %}
+          Más notas sobre {{ primary_category }}
+          {% elsif has_tag_related %}
+          Más notas etiquetadas con {{ primary_tag }}
           {% else %}
           Más notas
           {% endif %}
         </h2>
       </div>
       <div class="related-posts-grid">
-        {% for post in related_posts limit: 3 %}
-        <a href="{{ post.url | relative_url }}" class="related-post-card">
-          <span class="related-post-meta">{{ post.date | date: "%-d %b '%y" }}{% if post.categories.size > 0 %} · {{ post.categories | first }}{% endif %}</span>
-          <strong>{{ post.title }}</strong>
-          {% if post.description %}
-          <span>{{ post.description }}</span>
-          {% endif %}
-        </a>
-        {% endfor %}
+        {% assign related_rendered = 0 %}
+        {% if has_category_related %}
+          {% for post in site.posts %}
+            {% if post.url != page.url and post.categories contains primary_category and related_rendered < 3 %}
+            <a href="{{ post.url | relative_url }}" class="related-post-card">
+              <span class="related-post-meta">{{ post.date | date: "%-d %b '%y" }}{% if post.categories.size > 0 %} · {{ post.categories | first }}{% endif %}</span>
+              <strong>{{ post.title }}</strong>
+              {% if post.description %}
+              <span>{{ post.description }}</span>
+              {% endif %}
+            </a>
+            {% assign related_rendered = related_rendered | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% elsif has_tag_related %}
+          {% for post in site.posts %}
+            {% if post.url != page.url and post.tags contains primary_tag and related_rendered < 3 %}
+            <a href="{{ post.url | relative_url }}" class="related-post-card">
+              <span class="related-post-meta">{{ post.date | date: "%-d %b '%y" }}{% if post.categories.size > 0 %} · {{ post.categories | first }}{% endif %}</span>
+              <strong>{{ post.title }}</strong>
+              {% if post.description %}
+              <span>{{ post.description }}</span>
+              {% endif %}
+            </a>
+            {% assign related_rendered = related_rendered | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
       </div>
     </section>
     {% endif %}
