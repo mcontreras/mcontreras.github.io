@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="light">
+<html lang="{{ page.lang | default: site.lang | default: 'es' }}" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
-  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <title>{% if page.title %}{{ page.title | escape }} — {% endif %}{{ site.title | escape }}</title>
+  <meta name="description" content="{{ page.description | default: site.description | escape }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,700&display=swap" rel="stylesheet">
@@ -29,6 +29,9 @@
   </div>
 
   <script>
+    var GA_MEASUREMENT_ID = 'G-VP27VJ8NEE';
+    var gaLoadState = 'idle';
+
     // Theme
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
@@ -62,23 +65,62 @@
     }
 
     // Google Analytics — solo carga si hay consentimiento
+    function initGA() {
+      if (window.gtag && gaLoadState === 'ready') return;
+
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', GA_MEASUREMENT_ID, {
+        send_page_view: false,
+        page_path: window.location.pathname + window.location.search + window.location.hash,
+        transport_type: 'beacon'
+      });
+      gaLoadState = 'ready';
+    }
+
+    function trackPageView() {
+      if (!window.gtag) return;
+
+      window.gtag('event', 'page_view', {
+        page_title: document.title,
+        page_location: window.location.href,
+        page_path: window.location.pathname + window.location.search + window.location.hash
+      });
+    }
+
     function loadGA() {
+      if (gaLoadState === 'loading' || gaLoadState === 'ready') {
+        if (gaLoadState === 'ready') trackPageView();
+        return;
+      }
+
+      gaLoadState = 'loading';
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+
       var s = document.createElement('script');
       s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-VP27VJ8NEE';
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+      s.onload = function() {
+        initGA();
+        trackPageView();
+      };
+      s.onerror = function() {
+        gaLoadState = 'idle';
+      };
       document.head.appendChild(s);
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', 'G-VP27VJ8NEE');
     }
 
     // Cookies: gestión de consentimiento
     function setCookies(choice) {
       localStorage.setItem('cookies', choice);
       document.getElementById('cookie-banner').style.display = 'none';
-      if (choice === 'accepted') loadGA();
+      if (choice === 'accepted') {
+        loadGA();
+      } else {
+        gaLoadState = 'idle';
+      }
     }
 
     (function() {

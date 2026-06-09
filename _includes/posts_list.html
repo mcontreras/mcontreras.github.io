@@ -1,0 +1,21 @@
+{% assign posts = include.posts | default: site.posts %}
+{% assign post_limit = include.limit | default: posts.size %}
+{% assign excerpt_length = include.excerpt_length | default: 160 %}
+{% assign date_format = include.date_format | default: "%-d %b '%y" %}
+
+<div class="posts">
+  {% for post in posts limit: post_limit %}
+  <div class="post-row">
+    <span class="post-date">{{ post.date | date: date_format }}</span>
+    <div class="post-body">
+      {% if post.categories.size > 0 %}
+      <div class="post-cat">{{ post.categories | first }}</div>
+      {% endif %}
+      <a href="{{ post.url | relative_url }}" class="post-title">{{ post.title }}</a>
+      {% if post.excerpt %}
+      <p class="post-excerpt">{{ post.excerpt | strip_html | truncate: excerpt_length }}</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>

@@ -3,6 +3,8 @@ layout: default
 ---
 <div class="post-page">
   <div class="wrap">
+    {% assign primary_category = page.categories | first %}
+    {% assign primary_tag = page.tags | first %}
 
     <a href="{{ '/notas/' | relative_url }}" class="back-link">← Notas</a>
 
@@ -20,11 +22,51 @@ layout: default
         <span class="byline-sep">·</span>
         <span>{{ content | number_of_words | divided_by: 200 | plus: 1 }} min de lectura</span>
       </div>
+      {% include post_taxonomy.html %}
     </div>
 
     <div class="post-content">
       {{ content }}
     </div>
+
+    {% assign category_related = site.posts | where_exp: "post", "post.url != page.url and post.categories contains primary_category" %}
+    {% assign tag_related = site.posts | where_exp: "post", "post.url != page.url and post.tags contains primary_tag" %}
+    {% assign related_posts = category_related %}
+    {% assign related_context = primary_category %}
+    {% assign related_context_type = "category" %}
+    {% if related_posts == empty %}
+      {% assign related_posts = tag_related %}
+      {% assign related_context = primary_tag %}
+      {% assign related_context_type = "tag" %}
+    {% endif %}
+
+    {% if related_posts != empty %}
+    <section class="related-posts">
+      <div class="related-posts-head">
+        <p class="sh">Seguir leyendo</p>
+        <h2 class="related-posts-title">
+          {% if related_context_type == "category" %}
+          Más notas sobre {{ related_context }}
+          {% elsif related_context_type == "tag" %}
+          Más notas etiquetadas con {{ related_context }}
+          {% else %}
+          Más notas
+          {% endif %}
+        </h2>
+      </div>
+      <div class="related-posts-grid">
+        {% for post in related_posts limit: 3 %}
+        <a href="{{ post.url | relative_url }}" class="related-post-card">
+          <span class="related-post-meta">{{ post.date | date: "%-d %b '%y" }}{% if post.categories.size > 0 %} · {{ post.categories | first }}{% endif %}</span>
+          <strong>{{ post.title }}</strong>
+          {% if post.description %}
+          <span>{{ post.description }}</span>
+          {% endif %}
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
 
     <div class="post-nav-row">
       {% if page.previous.url %}

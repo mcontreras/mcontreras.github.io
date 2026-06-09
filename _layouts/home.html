@@ -35,22 +35,7 @@ layout: default
 
     <div>
       <p class="sh">Últimas notas</p>
-      <div class="posts">
-        {% for post in site.posts limit: 5 %}
-        <div class="post-row">
-          <span class="post-date">{{ post.date | date: "%-d %b" }}</span>
-          <div class="post-body">
-            {% if post.categories.size > 0 %}
-            <div class="post-cat">{{ post.categories | first }}</div>
-            {% endif %}
-            <a href="{{ post.url | relative_url }}" class="post-title">{{ post.title }}</a>
-            {% if post.excerpt %}
-            <p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
-            {% endif %}
-          </div>
-        </div>
-        {% endfor %}
-      </div>
+      {% include posts_list.html posts=site.posts limit=5 excerpt_length=120 date_format="%-d %b" %}
       <a href="{{ '/notas/' | relative_url }}" class="all-link">Ver todas las notas →</a>
     </div>
 

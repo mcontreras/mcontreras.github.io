@@ -2,6 +2,10 @@ title: Manu Contreras
 description: Veinte años escribiendo sobre tecnología, seguridad y medios.
 url: "https://manucontreras.com"
 baseurl: ""
+lang: es-ES
+locale: es_ES
+timezone: Europe/Madrid
+image: /assets/images/manu.jpg
 
 author:
   name: Manu Contreras
@@ -11,6 +15,14 @@ author:
   mastodon: https://mastodon.social/@mcontreras
   bluesky: https://bsky.app/profile/manucontreras.com
   threads: https://www.threads.com/@mcontreras
+
+social:
+  name: Manu Contreras
+  links:
+    - https://www.linkedin.com/in/mcontreras
+    - https://mastodon.social/@mcontreras
+    - https://bsky.app/profile/manucontreras.com
+    - https://www.threads.com/@mcontreras
 
 # Build settings
 markdown: kramdown
@@ -44,7 +56,18 @@ feed:
 defaults:
   - scope:
       path: ""
+    values:
+      image: /assets/images/manu.jpg
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: page
+  - scope:
+      path: ""
       type: posts
     values:
       layout: post
       comments: false
+      author: Manu Contreras
+      image: /assets/images/manu.jpg
