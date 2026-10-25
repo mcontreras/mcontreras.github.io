@@ -14,7 +14,7 @@ author:
   linkedin: https://www.linkedin.com/in/mcontreras
   mastodon: https://mastodon.social/@mcontreras
   bluesky: https://bsky.app/profile/manucontreras.com
-  threads: https://www.threads.com/@mcontreras
+  threads: https://www.threads.net/@mcontreras
 
 social:
   name: Manu Contreras
@@ -22,7 +22,11 @@ social:
     - https://www.linkedin.com/in/mcontreras
     - https://mastodon.social/@mcontreras
     - https://bsky.app/profile/manucontreras.com
-    - https://www.threads.com/@mcontreras
+    - https://www.threads.net/@mcontreras
+
+twitter:
+  username: mcontreras
+  card: summary_large_image
 
 # Build settings
 markdown: kramdown
