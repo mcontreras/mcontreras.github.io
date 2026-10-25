@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600..800&family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
   {% seo %}
 </head>
@@ -24,6 +25,7 @@
   </main>
   {% include footer.html %}
 
+  {% if site.google_analytics %}
   <!-- Banner de cookies -->
   <div id="cookie-banner" style="display:none" role="dialog" aria-label="Aviso de cookies">
     <p>Uso Google Analytics para saber cuántas personas visitan el sitio. ¿Aceptas las cookies analíticas?</p>
@@ -32,10 +34,18 @@
       <button onclick="setCookies('accepted')" class="cookie-btn cookie-btn--primary">Aceptar</button>
     </div>
   </div>
+  {% endif %}
 
   <script>
-    var GA_MEASUREMENT_ID = 'G-VP27VJ8NEE';
+    {% if site.google_analytics %}
+    var GA_MEASUREMENT_ID = '{{ site.google_analytics }}';
     var gaLoadState = 'idle';
+
+    function openCookieBanner() {
+      var banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'flex';
+    }
+    {% endif %}
 
     // Theme
     function applyTheme(theme) {
@@ -69,6 +79,7 @@
       applyTheme(next);
     }
 
+    {% if site.google_analytics %}
     // Google Analytics — solo carga si hay consentimiento
     function initGA() {
       if (window.gtag && gaLoadState === 'ready') return;
@@ -138,6 +149,7 @@
       }
       // Si es 'rejected', no se muestra nada ni se carga GA
     })();
+    {% endif %}
 
     // Mobile menu
     function toggleMenu() {

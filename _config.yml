@@ -28,6 +28,8 @@ twitter:
   username: mcontreras
   card: summary_large_image
 
+google_analytics: G-VP27VJ8NEE
+
 # Build settings
 markdown: kramdown
 highlighter: rouge

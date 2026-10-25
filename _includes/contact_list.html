@@ -3,12 +3,28 @@
     <span class="contact-type">Email</span>
     <span class="contact-val">{{ site.author.email }}</span>
   </a>
+  {% if site.author.linkedin %}
   <a href="{{ site.author.linkedin }}" target="_blank" rel="noopener" class="contact-item">
     <span class="contact-type">LinkedIn</span>
     <span class="contact-val">mcontreras</span>
   </a>
+  {% endif %}
+  {% if site.author.mastodon %}
   <a href="{{ site.author.mastodon }}" target="_blank" rel="noopener me" class="contact-item">
     <span class="contact-type">Mastodon</span>
     <span class="contact-val">@mcontreras@mastodon.social</span>
   </a>
+  {% endif %}
+  {% if site.author.bluesky %}
+  <a href="{{ site.author.bluesky }}" target="_blank" rel="noopener" class="contact-item">
+    <span class="contact-type">Bluesky</span>
+    <span class="contact-val">@manucontreras.com</span>
+  </a>
+  {% endif %}
+  {% if site.author.threads %}
+  <a href="{{ site.author.threads }}" target="_blank" rel="noopener" class="contact-item">
+    <span class="contact-type">Threads</span>
+    <span class="contact-val">@mcontreras</span>
+  </a>
+  {% endif %}
 </div>

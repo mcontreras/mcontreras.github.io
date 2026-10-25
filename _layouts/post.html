@@ -3,6 +3,9 @@ layout: default
 ---
 <div class="post-page">
   <div class="wrap">
+    {% assign months_es = "enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre" | split: "," %}
+    {% assign short_months_es = "ene,feb,mar,abr,may,jun,jul,ago,sep,oct,nov,dic" | split: "," %}
+    {% assign m_idx = page.date | date: "%m" | minus: 1 %}
     {% assign primary_category = page.categories | first %}
     {% assign primary_tag = page.tags | first %}
 
@@ -11,7 +14,7 @@ layout: default
     <div class="post-header">
       <p class="post-kicker">
         {% if page.categories.size > 0 %}{{ page.categories | first }} · {% endif %}
-        {{ page.date | date: "%-d de %B de %Y" }}
+        {{ page.date | date: "%-d" }} de {{ months_es[m_idx] }} de {{ page.date | date: "%Y" }}
       </p>
       <h1 class="post-h1">{{ page.title }}</h1>
       {% if page.description %}
@@ -32,22 +35,18 @@ layout: default
 
     {% assign has_category_related = false %}
     {% if primary_category %}
-      {% for post in site.posts %}
-        {% if post.url != page.url and post.categories contains primary_category %}
-          {% assign has_category_related = true %}
-          {% break %}
-        {% endif %}
-      {% endfor %}
+      {% assign category_posts = site.categories[primary_category] %}
+      {% if category_posts.size > 1 %}
+        {% assign has_category_related = true %}
+      {% endif %}
     {% endif %}
 
     {% assign has_tag_related = false %}
-    {% if primary_tag %}
-      {% for post in site.posts %}
-        {% if post.url != page.url and post.tags contains primary_tag %}
-          {% assign has_tag_related = true %}
-          {% break %}
-        {% endif %}
-      {% endfor %}
+    {% if has_category_related == false and primary_tag %}
+      {% assign tag_posts = site.tags[primary_tag] %}
+      {% if tag_posts.size > 1 %}
+        {% assign has_tag_related = true %}
+      {% endif %}
     {% endif %}
 
     {% if has_category_related or has_tag_related %}
@@ -67,10 +66,11 @@ layout: default
       <div class="related-posts-grid">
         {% assign related_rendered = 0 %}
         {% if has_category_related %}
-          {% for post in site.posts %}
-            {% if post.url != page.url and post.categories contains primary_category and related_rendered < 3 %}
+          {% for post in category_posts %}
+            {% if post.url != page.url and related_rendered < 3 %}
+            {% assign r_m_idx = post.date | date: "%m" | minus: 1 %}
             <a href="{{ post.url | relative_url }}" class="related-post-card">
-              <span class="related-post-meta">{{ post.date | date: "%-d %b '%y" }}{% if post.categories.size > 0 %} · {{ post.categories | first }}{% endif %}</span>
+              <span class="related-post-meta">{{ post.date | date: "%-d" }} {{ short_months_es[r_m_idx] }} '{{ post.date | date: "%y" }}{% if post.categories.size > 0 %} · {{ post.categories | first }}{% endif %}</span>
               <strong>{{ post.title }}</strong>
               {% if post.description %}
               <span>{{ post.description }}</span>
@@ -80,10 +80,11 @@ layout: default
             {% endif %}
           {% endfor %}
         {% elsif has_tag_related %}
-          {% for post in site.posts %}
-            {% if post.url != page.url and post.tags contains primary_tag and related_rendered < 3 %}
+          {% for post in tag_posts %}
+            {% if post.url != page.url and related_rendered < 3 %}
+            {% assign r_m_idx = post.date | date: "%m" | minus: 1 %}
             <a href="{{ post.url | relative_url }}" class="related-post-card">
-              <span class="related-post-meta">{{ post.date | date: "%-d %b '%y" }}{% if post.categories.size > 0 %} · {{ post.categories | first }}{% endif %}</span>
+              <span class="related-post-meta">{{ post.date | date: "%-d" }} {{ short_months_es[r_m_idx] }} '{{ post.date | date: "%y" }}{% if post.categories.size > 0 %} · {{ post.categories | first }}{% endif %}</span>
               <strong>{{ post.title }}</strong>
               {% if post.description %}
               <span>{{ post.description }}</span>
