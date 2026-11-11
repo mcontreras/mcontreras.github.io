@@ -838,6 +838,16 @@ footer {
 }
 
 /* ── Cookie banner ─────────────────────────────────────────── */
+@keyframes cookieBannerFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
 #cookie-banner {
   position: fixed;
   bottom: 24px;
@@ -858,6 +868,7 @@ footer {
   font-size: 13.5px;
   color: var(--muted);
   line-height: 1.5;
+  animation: cookieBannerFadeIn 0.25s ease-out;
 }
 #cookie-banner p {
   margin: 0;
@@ -880,6 +891,10 @@ footer {
   transition: background 0.15s, color 0.15s, border-color 0.15s;
   white-space: nowrap;
 }
+.cookie-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 .cookie-btn--secondary {
   background: transparent;
   color: var(--muted);
@@ -896,6 +911,10 @@ footer {
 .cookie-btn--primary:hover {
   background: var(--accent-hover, var(--accent));
   filter: brightness(1.08);
+}
+[data-theme="dark"] .cookie-btn--primary {
+  color: #121212;
+  font-weight: 600;
 }
 @media (max-width: 480px) {
   #cookie-banner { bottom: 12px; flex-direction: column; gap: 12px; }
